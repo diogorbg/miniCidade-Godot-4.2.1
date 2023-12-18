@@ -1,0 +1,159 @@
+[gd_scene load_steps=17 format=3 uid="uid://df7ica6fgl148"]
+
+[ext_resource type="Texture2D" uid="uid://cdjbelvxlfyag" path="res://miniCidade/tilemap_packed.png" id="1_7hnik"]
+
+[sub_resource type="GDScript" id="GDScript_26phf"]
+script/source = "extends Area2D
+
+@onready var anim = $anim
+
+var follow: PathFollow2D
+
+func _ready():
+	follow = get_parent() as PathFollow2D
+
+
+func _process(_delta):
+	follow.progress += 16.0 * _delta
+	rotation = -follow.rotation
+	var rot = follow.global_rotation_degrees
+	if rot<=45 && rot>=-45: anim.play(\"dir\")
+	elif rot>45 && rot<=135: anim.play(\"baixo\")
+	elif rot<-45 && rot>=-135: anim.play(\"cima\")
+	else: anim.play(\"esq\")
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c0juy"]
+size = Vector2(10, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wgi8"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(385, 0, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idho6"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(385, 16, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uet8a"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(385, 32, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8vn7o"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(401, 0, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwc7y"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(401, 16, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54ohd"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(401, 32, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrq66"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(417, 0, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hvoc"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(417, 16, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l18tj"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(417, 32, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ddhog"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(369, 0, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ye5rw"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(369, 16, 14, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ds4x"]
+atlas = ExtResource("1_7hnik")
+region = Rect2(369, 32, 14, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tpja7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7wgi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idho6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7wgi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uet8a")
+}],
+"loop": true,
+"name": &"baixo",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8vn7o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwc7y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8vn7o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54ohd")
+}],
+"loop": true,
+"name": &"cima",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrq66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hvoc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrq66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l18tj")
+}],
+"loop": true,
+"name": &"dir",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddhog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ye5rw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddhog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ds4x")
+}],
+"loop": true,
+"name": &"esq",
+"speed": 4.0
+}]
+
+[node name="npc1" type="Area2D"]
+script = SubResource("GDScript_26phf")
+
+[node name="col" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_c0juy")
+
+[node name="anim" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_tpja7")
+animation = &"esq"
+frame_progress = 0.0716561
